@@ -14,6 +14,11 @@ public:
         std::cout << "i will be overrided" << std::endl;
     }
 
+    friend std::ostream& operator<< (std::ostream& out, const base& b) {
+        out << "In base output" << std::endl;
+        return out;
+    }
+
 };
 
 class Derived : public Base
@@ -29,6 +34,13 @@ public:
     void DerivedOrigin() {
         std::cout << "I'm origin of derived class" << std::endl;
     }
+
+    friend std::ostream& operator<< (std::ostream& out, const Derived& d) {
+        out << "In derived" << std::endl;
+        out << static_cast<const Base&>(d) << std::endl;
+        return out;
+    }
+
 };
 
 int main() {
@@ -36,6 +48,7 @@ int main() {
     d.BaseOrigin();
     d.DerivedOrigin();
     d.Overrided();
+    std::cout << d << std::endl;
 
     return 0;
 }
